@@ -49,16 +49,24 @@ namespace DvtElevatorChallenge
         {                                                                                         // peopleToLoadCount - number of people to get into the elevator
             Elevator? nearestElevator = FindNearestElevator(targetFloor);                         // peopleToUnloadCount - number of people to get into the elevator
 
-            if (nearestElevator != null && targetFloor >= (0-buildingsFloorType.UndergroundFloors) && targetFloor < buildingsFloorType.AbovegroundFloors - 1)
+            if (peopleToLoadCount < 0 || peopleToLoadCount < 0)
+                Console.WriteLine("Check your input parameters.You can not load or unload a negative number of peoples.");
+            else 
             {
-                nearestElevator.MoveToFloor(targetFloor);
-                if (nearestElevator.HasPeopleToUnload == true && peopleToUnloadCount <= nearestElevator.Occupancy)  // we have to check if the people to unload <= total number of persons
-                                                                                                                    // that are into the elevator at that specific time 
-                    nearestElevator.UnloadPeople(peopleToUnloadCount);                                        
-                nearestElevator.LoadPeople(peopleToLoadCount);
+                if (nearestElevator != null &&
+               targetFloor >= (0 - buildingsFloorType.UndergroundFloors) &&                        // check the boundaries for the target floor
+               targetFloor < buildingsFloorType.AbovegroundFloors - 1)                             // to be greater than the number of underground floors 
+                {                                                                                  // and less than the maximum number of floors above ground
+                    nearestElevator.MoveToFloor(targetFloor);
+                    if (nearestElevator.HasPeopleToUnload == true &&
+                        peopleToUnloadCount <= nearestElevator.Occupancy)  // we have to check if the people to unload <= total number of persons
+                                                                           // that are into the elevator at that specific time 
+                        nearestElevator.UnloadPeople(peopleToUnloadCount);
+                    nearestElevator.LoadPeople(peopleToLoadCount);
+                }
+                else
+                    Console.WriteLine("No available elevator.");
             }
-            else
-                Console.WriteLine("No available elevator.");
         }
 
         private List<Elevator>? GetAvailableElevators(ref List<Elevator> elevators)  // this returns available elevators
