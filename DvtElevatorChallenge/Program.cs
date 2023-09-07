@@ -17,7 +17,7 @@ namespace DvtElevator
             int numberOfFloors = type.AbovegroundFloors + type.UndergroundFloors+1;
             Building building = new Building(ref elevatorsList, maximumCapacity, type, numberOfFloors, MAX_ALPHABET_SIZE, MAX_NUMBER_OF_FLOORS,MAX_NUMBER_OF_PEOPLE);
             // Simulate elevator calls
-            building.CallElevator(5, 4, 0);
+            building.CallElevator(5, 4, -1);
             building.CallElevator(7, 3, 2);
         }
     }

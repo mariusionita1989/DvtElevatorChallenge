@@ -11,7 +11,6 @@ namespace DvtElevatorChallenge
         public ElevatorStatus Status { get; private set; }
         public int Capacity { get; private set; }
         public int Occupancy { get; private set; }
-        public bool HasPeopleToUnload { get; set; }
 
         public Elevator(char name, int capacity)
         {
@@ -21,7 +20,6 @@ namespace DvtElevatorChallenge
             Status = ElevatorStatus.Stopped;
             Capacity = capacity;
             Occupancy = 0;
-            HasPeopleToUnload = false;
         }
 
         public void MoveToFloor(int targetFloor)

@@ -45,28 +45,34 @@ namespace DvtElevatorChallenge
             return status;
         }
 
-        public void CallElevator(int targetFloor, int peopleToLoadCount, int peopleToUnloadCount) // we have 2 parameters
+        public bool CallElevator(int targetFloor, int peopleToLoadCount, int peopleToUnloadCount) // we have 2 parameters
         {                                                                                         // peopleToLoadCount - number of people to get into the elevator
             Elevator? nearestElevator = FindNearestElevator(targetFloor);                         // peopleToUnloadCount - number of people to get into the elevator
-
-            if (peopleToLoadCount < 0 || peopleToLoadCount < 0)
+            bool status = true; // has no errors
+            if (peopleToLoadCount < 0 || peopleToUnloadCount < 0) 
+            {
                 Console.WriteLine("Check your input parameters.You can not load or unload a negative number of peoples.");
+                status = false;
+            }  
             else 
             {
                 if (nearestElevator != null &&
-               targetFloor >= (0 - buildingsFloorType.UndergroundFloors) &&                        // check the boundaries for the target floor
-               targetFloor < buildingsFloorType.AbovegroundFloors - 1)                             // to be greater than the number of underground floors 
-                {                                                                                  // and less than the maximum number of floors above ground
+                    targetFloor >= (0 - buildingsFloorType.UndergroundFloors) &&                        // check the boundaries for the target floor
+                    targetFloor < buildingsFloorType.AbovegroundFloors - 1)                             // to be greater than the number of underground floors 
+                {                                                                                       // and less than the maximum number of floors above ground
                     nearestElevator.MoveToFloor(targetFloor);
-                    if (nearestElevator.HasPeopleToUnload == true &&
-                        peopleToUnloadCount <= nearestElevator.Occupancy)  // we have to check if the people to unload <= total number of persons
-                                                                           // that are into the elevator at that specific time 
-                        nearestElevator.UnloadPeople(peopleToUnloadCount);
+                    if (peopleToUnloadCount > 0 &&                                 // we can check if we have people to unload if the parameter value is > 0
+                        peopleToUnloadCount <= nearestElevator.Occupancy)          // we have to check if the people to unload <= total number of persons
+                        nearestElevator.UnloadPeople(peopleToUnloadCount);         // that are into the elevator at that specific time 
+                    
+                    if(peopleToLoadCount > 0)
                     nearestElevator.LoadPeople(peopleToLoadCount);
                 }
                 else
                     Console.WriteLine("No available elevator.");
             }
+
+            return status;
         }
 
         private List<Elevator>? GetAvailableElevators(ref List<Elevator> elevators)  // this returns available elevators

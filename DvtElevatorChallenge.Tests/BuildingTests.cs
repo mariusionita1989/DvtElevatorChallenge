@@ -21,7 +21,6 @@ namespace DvtElevatorChallenge.Tests
 
             // Assert
             Assert.Equal("This building has " + elevatorNames.Count + "elevators.", building.DisplayStatusAboutNumberOfElevators());
-            // You can assert that the elevator has moved to the desired floor and loaded the expected number of people here.
         }
 
         [Fact]
@@ -38,6 +37,25 @@ namespace DvtElevatorChallenge.Tests
 
             // Assert
             Assert.Equal("This building has no elevators.", building.DisplayStatusAboutNumberOfElevators());
+        }
+
+        [Fact]
+        public void CallElevator_WithInvalidInputs_ElevatorMoves()
+        {
+            // Arrange
+            List<char> elevatorNames = new List<char> { 'A', 'B', 'C' };
+            int elevatorCapacity = 10;
+            FloorType floorType = new FloorType(2, 7);
+            int maxNumberOfFloors = 10;
+            int elevatorsListMaxSize = 3;
+            int maxNumberOfPeopleOnEachFloor = 20;
+            Building building = new Building(ref elevatorNames, elevatorCapacity, floorType, maxNumberOfFloors, elevatorsListMaxSize, maxNumberOfFloors, maxNumberOfPeopleOnEachFloor);
+
+            // Act
+            bool status = building.CallElevator(5,-3,-1);
+
+            // Assert
+            Assert.False(status);
         }
     }
 }

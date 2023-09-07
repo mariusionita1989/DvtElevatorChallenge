@@ -3,7 +3,7 @@
     public interface IBuilding
     {
         string DisplayStatusAboutNumberOfElevators();
-        void CallElevator(int targetFloor, int peopleCount, int peopleToUnloadCount);
+        bool CallElevator(int targetFloor, int peopleCount, int peopleToUnloadCount);
     }
 
 }
